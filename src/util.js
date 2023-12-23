@@ -1,0 +1,15 @@
+export let baseUrl = "https://composite-6156.ue.r.appspot.com"
+// export let baseUrl = "http://127.0.0.1:8050";
+
+export function parseJwt(token) {
+    if (!token){
+        return
+    }
+    const base64Url = token.split('.')[1]; 
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
